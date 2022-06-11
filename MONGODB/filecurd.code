@@ -1,0 +1,102 @@
+
+   
+const fs = require('fs');
+const path = require('path');
+const dirPath= path.join(__dirname,'crud');
+const filePath = `${dirPath}/apple.txt`;
+// fs.writeFileSync(filePath,'this is a simple file');
+// fs.readFile(filePath,'utf8',(err,item)=>{
+// console.log(item);
+// })
+// fs.appendFile(filePath,' for fruits',(err)=>{
+// if(!err) console.log("file is updated")
+// })
+// fs.rename(filePath, `${dirPath}/fruit.txt`,(err)=>{
+// if(!err) console.log("file name is updated")
+// })
+
+fs.unlinkSync(`${dirPath}/fruit.txt`);
+
+
+const http = require('http')
+const data = require('./data')
+const fs = require('fs')
+const path = require('path')
+const express = require('express')
+
+
+const App = express();
+const frontendpath = path.join(__dirname, 'frontend');
+const dirPth = path.join(__dirname, 'files');
+
+App.use(express.static(frontendpath))
+App.set('view engine','ejs')
+
+App.get('',(_,res)=>{
+    res.sendFile(`${frontendpath}/index.html`)
+});
+
+App.get('/about',(_,res)=>{
+    res.sendFile(`${frontendpath}/about.html`)
+})
+
+App.get('/login',(_,res)=>{
+    res.sendFile(`${frontendpath}/login.html`)
+})
+
+App.get('/profile',(_,res)=>{
+    const User={name:'Mukthayar',email:'khanadil1000s@gmail.com'}
+    res.render('profile',{User})
+})
+
+App.get('*',(_,res)=>{
+    res.send('404 PAGE')
+})
+
+//SIMPLE APIS
+
+
+// App.get('',(req,res)=>{
+//     res.send('HOME PAGE')
+// })
+
+// App.get('/aboutus',(req,res)=>{
+//     console.log('data recoved===>',req.query)
+//     res.send('ABOUT US')
+// })
+// App.get('/welcome',(req,res)=>{
+//     res.send('welcome US')
+// })
+
+App.listen(5000)
+
+
+
+
+
+//FILE SYSTEM EXAMPLE
+
+
+// for(var i =0;i<=5;i++){
+
+//     fs.writeFileSync(dirPth + `/Hello${i}.txt`,'Hello world')
+// }
+
+// fs.readdir(dirPth,(err,files)=>{
+//     files.forEach((item)=>{
+//         console.log("Files Names===>",item)
+//     })
+// })
+
+// http.createServer((req, res) => {
+
+//     res.writeHead(200, { 'Content-Type': 'application\json' });
+//     res.write(JSON.stringify(data));
+//     res.end()
+
+
+// }).listen(5000)
+
+// const input = process.argv
+
+// fs.writeFileSync(input[2],input[3])
